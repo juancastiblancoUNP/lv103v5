@@ -3,8 +3,18 @@
 // 1. CARGA DE DEPENDENCIAS (EL VÍNCULO A LA CARPETA 'vendor/' CREADA POR AZURE)
 require 'vendor/autoload.php';
 
-// 2. CONEXIÓN A COSMOS DB
-$connectionString = getenv('COSMOSDB_CONNECTION_STRING'); // El nombre que definiste en App Service
+// Intenta usar el prefijo estándar para 'Custom Connection String'
+$connectionString = getenv('CUSTOMCONNSTR_COSMOSDB_CONNECTION_STRING');
+
+if (!$connectionString) {
+    // Si no funciona, intenta el nombre simple
+    $connectionString = getenv('COSMOSDB_CONNECTION_STRING');
+}
+
+if (!$connectionString) {
+    die("Error: La cadena de conexión de Cosmos DB no está disponible.");
+}
+// ... continuar con la conexión ...
 
 if (!$connectionString) {
     die("Error: La cadena de conexión de Cosmos DB no está disponible.");
